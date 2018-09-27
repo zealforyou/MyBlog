@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link type="text/css" href="src/css/reset.css" rel="stylesheet">
+    <link type="text/css" href="src/css/common.css" rel="stylesheet">
+    <link type="text/css" href="src/css/index.css" rel="stylesheet">
+    <style>
+        .mask {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, .2);
+        }
+    </style>
+</head>
+<body>
+<div class="big-img"
+     style="background-image: url(//hbfile.b0.upaiyun.com/img/home/banner/ae1b2a5b8e939b936072ea75a75479734860a20eea073);
+     background-repeat: no-repeat;background-size: cover">
+    <div class="mask"></div>
+</div>
+<div class="content">
+    <div class="top">
+        <div class="top-left">
+            <span>首页</span>
+            <span>发现</span>
+            <span>最新</span>
+            <span style="width: 1px;background: #f1f1f1;height: 100%;padding: 0 !important;"></span>
+        </div>
+        <div class="top-right">
+            <button style="background-color: #f40;border: 1px solid transparent">注册</button>
+            <button style="border: 1px solid #fff;">登录</button>
+        </div>
+    </div>
+    <span class="big-title">花瓣，陪你做生活的设计师</span>
+    <div class="search-div">
+        <input type="text" placeholder="搜索你喜欢的">
+    </div>
+    <div class="bottom">
+
+    </div>
+
+</div>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="src/js/main.js"></script>
+<script>
+
+   $(function () {
+      $(".big-title").hover(function () {
+      });
+      var bigImg = $(".big-img")
+      $(document).scroll(function () {
+         var scroH = $(document).scrollTop();  //滚动高度
+         var viewH = $(window).height();  //可见高度
+         var contentH = $(document).height();  //内容高度
+         if (scroH < bigImg.height()) {  //距离顶部大于100px时
+            bigImg.css({"transform": "translate(0,-" + scroH * 0.3 + "px)"})
+         }
+
+      });
+   })
+</script>
+</body>
+</html>

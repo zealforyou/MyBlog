@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/reset.css" type="text/css">
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <style>
+        .contain-title {
+            width: 1280px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        .img-contain {
+            height: 100%;
+            width: 23%;
+            position: relative;
+        }
+
+        .img-contain > object {
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            position: absolute;
+        }
+
+        .float-left {
+            float: left;
+        }
+
+        .menu-item {
+            float: left;
+            height: 100%;
+            padding: 0 25px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .menu-hover {
+            background-color: #0088ff;
+            opacity: 0.9;
+            width: 200px;
+            position: absolute;
+            padding: 20px 0;
+            color: white;
+            display: none;
+            top: 100%;
+        }
+
+        .menu-hover a {
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            display: block;
+            font-size: 15px;
+            color: white;
+        }
+
+        .menu-item:hover {
+            color: #08f;
+        }
+
+        .menu-hover a:hover {
+            font-size: 16px;
+        }
+
+        .menu-hover object {
+            position: absolute;
+            top: -18px;
+            right: 0;
+            left: 0;
+            margin: auto;
+        }
+
+        .content-center {
+            width: 100%;
+            position: relative;
+            height: 500px;
+            z-index: -2;
+            background: url('//hbfile.b0.upaiyun.com/img/home/banner/ae1b2a5b8e939b936072ea75a75479734860a20eea073') no-repeat;
+            background-size: cover;
+        }
+
+        .content-center .black {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: -1
+        }
+
+        .notice {
+            float: left;
+            height: 50px;
+            margin-left: 300px;
+            overflow: hidden;
+        }
+
+        .notice-contain {
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .notice span {
+            display: block;
+            line-height: 50px;
+            height: 50px;
+            background: url("img/a3.png") no-repeat;
+            padding-left: 25px;
+            background-position: left;
+        }
+
+        .fengche {
+            width: 350px;
+            height: 400px;
+            position: absolute;
+            opacity: 0.9;
+        }
+
+        @keyframes fengche {
+            from {
+                transform: rotate(0);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fengche :nth-child(2) {
+            width: 300px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            animation: fengche 2s linear infinite;
+        }
+
+        .fengche :first-child {
+
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            bottom: 0;
+        }
+
+        .big-word {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 150px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body style="min-width: 1280px">
+<div class="contain-title">
+    <div class="img-contain float-left">
+        <object data="img/logo.svg" type="image/svg+xml"></object>
+    </div>
+    <div class="float-left" style="height: 100%;position: relative">
+        <a class="menu-item" href="home.html">首页</a>
+        <a class="menu-item">学习资料</a>
+        <a class="menu-item">心动时刻</a>
+        <a class="menu-item">喜欢听歌</a>
+        <a class="menu-item">喜欢画画</a>
+        <a class="menu-item">经典语录</a>
+        <a class="menu-item">英语学习</a>
+        <a class="menu-item">关于作者</a>
+        <div id="hovers">
+            <div class="menu-hover">
+                <object data="img/indicator.svg" type="image/svg+xml"></object>
+                <a>Leaning Web</a>
+                <a>Leaning Java</a>
+                <a>Leaning Android</a>
+                <a>Leaning More</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="content-center">
+    <div class="black"></div>
+    <div class="fengche">
+        <img src="img/fengche2.png">
+        <img id="fengche" src="img/fengche1.png">
+    </div>
+    <canvas id="bigWord" class="big-word" width="600px" height="80px"/>
+    <!--<span >生活，多一点简答，少一点烦恼</span>-->
+</div>
+<div class="notice-contain">
+    <div class="notice">
+        <span>小酌一杯</span>
+        <span>生活就应该简单一点</span>
+    </div>
+</div>
+
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+   $(function () {
+      var location = [1, 2, 3, 5];
+      (function () {
+         for (var i = 0; i < location.length; i++) {
+            var $menuItem = $(".menu-item").eq(location[i]);
+            var $hover = $("#hovers").children().eq(i);
+            if ($hover.length > 0 && $menuItem.length > 0) {
+               var left = $menuItem.position().left + ($menuItem.width() / 2) - $hover.width() / 2;
+               $hover.offset({left: left, top: $menuItem.height()});
+            }
+         }
+      })();
+      for (var i = 0; i < location.length; i++) {
+         var $menuItem = $(".menu-item").eq(location[i]);
+         var $hover = $("#hovers").children().eq(i);
+         (function ($menuItem, $hover) {
+            $menuItem.hover(function () {
+               if ($hover.length > 0) {
+                  if ($(this).is(":hover")) {
+                     $hover.hover(function () {
+                        if (!$hover.is(":hover")) {
+                           $hover.hide();
+                        }
+                     });
+                     $hover.show();
+                  } else {
+                     if (!$hover.is(":hover")) {
+                        $hover.hide();
+                     }
+                  }
+               }
+            })
+         })($menuItem, $hover);
+      }
+      setInterval(function () {
+         var $notice = $(".notice");
+         if ($notice.children().length == 2) {
+            $notice.animate({scrollTop: 50}, "slow", function () {
+               $notice.append("<span>第一眼遇见，第二眼沦陷</span>");
+               $notice.children(":first-child").remove();
+            });
+         }
+
+      }, 3000);
+
+   });
+   (function () {
+      var canvas = document.getElementById("bigWord");
+      if (canvas.getContext) {
+         var context = canvas.getContext('2d');
+         context.fillStyle = '#fff';
+         context.textBaseline = "ideographic";
+         context.font = "bold 35px 宋体";
+         var words = "生活，多一点简单，少一点烦恼  ";
+         var indexs = [];
+         for (var i = 0; i < words.length; i++) {
+            indexs.push({offset: context.measureText(words.substring(0, i)).width, bottom: canvas.height});
+         }
+         var next = 0;
+         let task = setInterval(function () {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            var finish;
+            for (i = 0; i < indexs.length; i++) {
+               var word = indexs[i];
+               if (i === next) {
+                  if (next === 0) {
+                     word.bottom = word.bottom - 2;
+                     var last = indexs[indexs.length - 1];
+                     if (last.bottom < canvas.height) {
+                        last.bottom = last.bottom + 2;
+                     }
+
+                  } else if (next === indexs.length - 1) {
+                     finish = true;
+                  } else {
+                     indexs[i - 1].bottom = indexs[i - 1].bottom + 2;
+                     word.bottom = word.bottom - 2;
+                  }
+                  if (canvas.height - word.bottom >= 35) {
+                     if (next === indexs.length - 1) {
+                        next = 0;
+                     } else {
+                        next++;
+                     }
+                  }
+               }
+               context.fillText(words.charAt(i), word.offset, word.bottom);
+            }
+            if (finish) {
+               clearInterval(task);
+            }
+         }, 10);
+      }
+   })();
+
+   function textAnimation() {
+
+   }
+</script>
+
+</body>
+</html>
