@@ -150,6 +150,14 @@
             bottom: 0;
         }
 
+        .small-word {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            bottom: 0;
+        }
+
         .big-word {
             position: absolute;
             left: 0;
@@ -162,7 +170,8 @@
 <body style="min-width: 1280px">
 <div class="contain-title">
     <div class="img-contain float-left">
-        <object data="img/logo.svg" type="image/svg+xml"></object>
+        <object data="img/log2.svg" type="image/svg+xml"></object>
+        <canvas id="bigWord" class="small-word" width="600px" height="50px"/>
     </div>
     <div class="float-left" style="height: 100%;position: relative">
         <a class="menu-item" href="home.html">首页</a>
@@ -191,13 +200,11 @@
         <img src="img/fengche2.png">
         <img id="fengche" src="img/fengche1.png">
     </div>
-    <canvas id="bigWord" class="big-word" width="600px" height="80px"/>
+    <!--<canvas id="bigWord" class="big-word" width="600px" height="80px"/>-->
     <!--<span >生活，多一点简答，少一点烦恼</span>-->
 </div>
 <div class="notice-contain">
     <div class="notice">
-        <span>小酌一杯</span>
-        <span>生活就应该简单一点</span>
     </div>
 </div>
 
@@ -237,32 +244,48 @@
             })
          })($menuItem, $hover);
       }
-      setInterval(function () {
-         var $notice = $(".notice");
-         if ($notice.children().length == 2) {
+      var $notice = $(".notice");
+      var temp = 3;
+      gonggao();
+
+      function gonggao() {
+         var length = $notice.children().length;
+         if (length === 3) {
             $notice.animate({scrollTop: 50}, "slow", function () {
-               $notice.append("<span>第一眼遇见，第二眼沦陷</span>");
                $notice.children(":first-child").remove();
+               $notice.scrollTop(0);
+               $notice.append("<span>第一眼遇见，第二眼沦陷" + temp + "</span>");
+               setTimeout(function () {
+                  temp++;
+                  gonggao();
+               }, 3000)
             });
+         } else {
+            for (var i = 0; i < 3 - length; i++) {
+               $notice.append("<span>第一眼遇见，第二眼沦陷" + i + "</span>");
+            }
+            setTimeout(function () {
+               gonggao();
+            }, 3000)
          }
-
-      }, 3000);
-
+      }
    });
    (function () {
       var canvas = document.getElementById("bigWord");
       if (canvas.getContext) {
          var context = canvas.getContext('2d');
-         context.fillStyle = '#fff';
+         context.fillStyle = '#33bb99';
          context.textBaseline = "ideographic";
-         context.font = "bold 35px 宋体";
+         var fontSize = 15;
+         context.font = "normal " + fontSize + "px 微软雅黑";
          var words = "生活，多一点简单，少一点烦恼  ";
          var indexs = [];
+         var originBottom = canvas.height - 0.15*canvas.height;
          for (var i = 0; i < words.length; i++) {
-            indexs.push({offset: context.measureText(words.substring(0, i)).width, bottom: canvas.height});
+            indexs.push({offset: context.measureText(words.substring(0, i)).width, bottom: originBottom});
          }
          var next = 0;
-         let task = setInterval(function () {
+         var task = setInterval(function () {
             context.clearRect(0, 0, canvas.width, canvas.height);
             var finish;
             for (i = 0; i < indexs.length; i++) {
@@ -271,17 +294,21 @@
                   if (next === 0) {
                      word.bottom = word.bottom - 2;
                      var last = indexs[indexs.length - 1];
-                     if (last.bottom < canvas.height) {
+                     if (last.bottom < originBottom) {
                         last.bottom = last.bottom + 2;
                      }
 
-                  } else if (next === indexs.length - 1) {
-                     finish = true;
-                  } else {
+                  }
+                  // else if (next === indexs.length - 1) {
+                  //    finish = true;
+                  //
+                  // }
+                  else {
                      indexs[i - 1].bottom = indexs[i - 1].bottom + 2;
                      word.bottom = word.bottom - 2;
                   }
-                  if (canvas.height - word.bottom >= 35) {
+                  if (originBottom - word.bottom >= fontSize) {
+                     word.bottom = originBottom - fontSize;
                      if (next === indexs.length - 1) {
                         next = 0;
                      } else {
@@ -291,16 +318,13 @@
                }
                context.fillText(words.charAt(i), word.offset, word.bottom);
             }
-            if (finish) {
-               clearInterval(task);
-            }
+            // if (finish) {
+            //    clearInterval(task);
+            // }
          }, 10);
       }
    })();
 
-   function textAnimation() {
-
-   }
 </script>
 
 </body>
