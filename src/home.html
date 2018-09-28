@@ -41,7 +41,7 @@
         }
 
         .menu-hover {
-            background-color: #0088ff;
+            background-color: #0af;
             opacity: 0.9;
             width: 200px;
             position: absolute;
@@ -61,7 +61,7 @@
         }
 
         .menu-item:hover {
-            color: #08f;
+            color: #09f;
         }
 
         .menu-hover a:hover {
@@ -165,6 +165,59 @@
             top: 150px;
             margin: auto;
         }
+
+        .center-card-contain {
+            margin: 40px 40px;
+            overflow: hidden;
+            width: 820px;
+        }
+
+        .card {
+            width: 360px;
+            height: 320px;
+            box-shadow: 3px -2px 3px #888;
+            opacity: 0.9;
+            float: left;
+            margin-left: 10px;
+            margin-top: 10px;
+            background-size: cover;
+        }
+
+        .center-card-contain :nth-child(1) {
+            border-bottom-right-radius: 30px;
+            border-top-left-radius: 30px;
+        }
+
+        .center-card-contain :nth-child(2) {
+            border-top-right-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+
+        .center-card-contain :nth-child(3) {
+            border-bottom-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .center-card-contain :nth-child(4) {
+            border-bottom-right-radius: 30px;
+            border-top-left-radius: 30px;
+        }
+
+        .center-card-contain :nth-child(1):hover {
+            transform: translate(-5px, -5px);
+        }
+
+        .center-card-contain :nth-child(2):hover {
+            transform: translate(5px, -5px);
+        }
+
+        .center-card-contain :nth-child(3):hover {
+            transform: translate(-5px, 5px);
+        }
+
+        .center-card-contain :nth-child(4):hover {
+            transform: translate(5px, 5px);
+        }
     </style>
 </head>
 <body style="min-width: 1280px">
@@ -207,123 +260,23 @@
     <div class="notice">
     </div>
 </div>
+<div style="background-color: #fff;">
+    <div class="center-card-contain">
+        <div class="card" style="">
+        </div>
+        <div class="card" style="">
+        </div>
+        <div class="card" style="">
+        </div>
+        <div class="card" style="">
+        </div>
+    </div>
+</div>
+
 
 <script src="js/jQuery.js"></script>
+<script src="js/main.js"></script>
 <script>
-   $(function () {
-      var location = [1, 2, 3, 5];
-      (function () {
-         for (var i = 0; i < location.length; i++) {
-            var $menuItem = $(".menu-item").eq(location[i]);
-            var $hover = $("#hovers").children().eq(i);
-            if ($hover.length > 0 && $menuItem.length > 0) {
-               var left = $menuItem.position().left + ($menuItem.width() / 2) - $hover.width() / 2;
-               $hover.offset({left: left, top: $menuItem.height()});
-            }
-         }
-      })();
-      for (var i = 0; i < location.length; i++) {
-         var $menuItem = $(".menu-item").eq(location[i]);
-         var $hover = $("#hovers").children().eq(i);
-         (function ($menuItem, $hover) {
-            $menuItem.hover(function () {
-               if ($hover.length > 0) {
-                  if ($(this).is(":hover")) {
-                     $hover.hover(function () {
-                        if (!$hover.is(":hover")) {
-                           $hover.hide();
-                        }
-                     });
-                     $hover.show();
-                  } else {
-                     if (!$hover.is(":hover")) {
-                        $hover.hide();
-                     }
-                  }
-               }
-            })
-         })($menuItem, $hover);
-      }
-      var $notice = $(".notice");
-      var temp = 3;
-      gonggao();
-
-      function gonggao() {
-         var length = $notice.children().length;
-         if (length === 3) {
-            $notice.animate({scrollTop: 50}, "slow", function () {
-               $notice.children(":first-child").remove();
-               $notice.scrollTop(0);
-               $notice.append("<span>第一眼遇见，第二眼沦陷" + temp + "</span>");
-               setTimeout(function () {
-                  temp++;
-                  gonggao();
-               }, 3000)
-            });
-         } else {
-            for (var i = 0; i < 3 - length; i++) {
-               $notice.append("<span>第一眼遇见，第二眼沦陷" + i + "</span>");
-            }
-            setTimeout(function () {
-               gonggao();
-            }, 3000)
-         }
-      }
-   });
-   (function () {
-      var canvas = document.getElementById("bigWord");
-      if (canvas.getContext) {
-         var context = canvas.getContext('2d');
-         context.fillStyle = '#33bb99';
-         context.textBaseline = "ideographic";
-         var fontSize = 15;
-         context.font = "normal " + fontSize + "px 微软雅黑";
-         var words = "生活，多一点简单，少一点烦恼  ";
-         var indexs = [];
-         var originBottom = canvas.height - 0.15*canvas.height;
-         for (var i = 0; i < words.length; i++) {
-            indexs.push({offset: context.measureText(words.substring(0, i)).width, bottom: originBottom});
-         }
-         var next = 0;
-         var task = setInterval(function () {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            var finish;
-            for (i = 0; i < indexs.length; i++) {
-               var word = indexs[i];
-               if (i === next) {
-                  if (next === 0) {
-                     word.bottom = word.bottom - 2;
-                     var last = indexs[indexs.length - 1];
-                     if (last.bottom < originBottom) {
-                        last.bottom = last.bottom + 2;
-                     }
-
-                  }
-                  // else if (next === indexs.length - 1) {
-                  //    finish = true;
-                  //
-                  // }
-                  else {
-                     indexs[i - 1].bottom = indexs[i - 1].bottom + 2;
-                     word.bottom = word.bottom - 2;
-                  }
-                  if (originBottom - word.bottom >= fontSize) {
-                     word.bottom = originBottom - fontSize;
-                     if (next === indexs.length - 1) {
-                        next = 0;
-                     } else {
-                        next++;
-                     }
-                  }
-               }
-               context.fillText(words.charAt(i), word.offset, word.bottom);
-            }
-            // if (finish) {
-            //    clearInterval(task);
-            // }
-         }, 10);
-      }
-   })();
 
 </script>
 
